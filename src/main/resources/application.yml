@@ -2,10 +2,23 @@ server:
   port: 8082
 
 spring:
+  application:
+    name: inbox-app
   security:
     oauth2:
       client:
         registration:
           github:
-            client-id: Iv1.53ec00540d7a6456
-            client-secret: 252841b8f6ce34137f87b472c67ecb4f09b9051a
+            client-id: <clientID>
+            client-secret: <clientSecret>
+  data:
+    cassandra:
+      keyspace-name: main
+      username: <username>
+      password: <password>
+      schema-action: recreate_drop_unused
+      request:
+        timeout: 10s
+      connection:
+        connect-timeout: 10s
+        init-query-timeout: 10s
