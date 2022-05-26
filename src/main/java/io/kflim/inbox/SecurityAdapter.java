@@ -1,4 +1,4 @@
-package io.kflim;
+package io.kflim.inbox;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
