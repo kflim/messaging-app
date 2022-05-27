@@ -1,7 +1,7 @@
 # Inbox-App
 
-This project is part of my ongoing effort to develop my full-stack skills. Currently, it is using Spring Boot, 
-Apache Cassandra and Thymeleaf. 
+This project is part of my ongoing effort to develop my full-stack skills. Currently, it is using Thymeleaf, Spring Boot, 
+Spring Security and Apache Cassandra. 
 
 While I had learnt Spring Boot and related frameworks before, I had not yet practiced 
 working on full-stack projects and this is my first time implementing one, though the UI is rather simple.
