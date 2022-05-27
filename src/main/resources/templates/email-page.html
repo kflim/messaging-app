@@ -15,6 +15,7 @@
   <style>
         .container {
           display: grid;
+          margin-top: 20px;
 
           grid-template-areas:
             "header header header"
@@ -50,6 +51,9 @@
           grid-area: footer;
         }
 
+        .body-text {
+          white-space: pre-wrap;
+        }
 
     </style>
 </head>
@@ -57,6 +61,11 @@
 <div class="container">
   <header>
     <!-- Header content -->
+    <h3>
+      Inbox App
+      <small class="text-muted">Welcome, </small>
+      <small class="text-muted" th:text="${userName}">Username</small>
+    </h3>
   </header>
 
   <nav>
@@ -81,14 +90,14 @@
           <dt>Subject</dt>
           <dd th:text="${email.subject}"></dd>
           <dt>Body</dt>
-          <dd th:text="${email.body}"></dd>
+          <dd class="body-text" th:text="${email.body}"></dd>
         </dl>
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <a class="btn btn-primary"
-             th:href="@{'/compose?=' + ${email.from}}"
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a class="btn btn-primary me-md-2"
+             th:href="@{'/compose?to=' + ${email.from} + '&id=' + ${email.id}}"
              type="button">Reply</a>
           <a class="btn btn-primary"
-             th:href="@{'/compose?=' + ${toList} + ', ' + ${email.from}}"
+             th:href="@{'/compose?to=' + ${toList} + ',' + ${email.from} + '&id=' + ${email.id}}"
              type="button">Reply All</a>
         </div>
       </div>

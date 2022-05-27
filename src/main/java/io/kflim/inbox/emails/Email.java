@@ -13,7 +13,6 @@ import static org.springframework.data.cassandra.core.mapping.CassandraType.Name
 
 @Table(value = "messages_by_id")
 public class Email {
-
     @Id
     @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private UUID id;
@@ -26,6 +25,9 @@ public class Email {
 
     @CassandraType(type = Name.TEXT)
     private String subject;
+
+    @CassandraType(type = Name.TEXT)
+    private String body;
 
     public UUID getId() {
         return id;
@@ -67,6 +69,4 @@ public class Email {
         this.body = body;
     }
 
-    @CassandraType(type = Name.TEXT)
-    private String body;
 }

@@ -6,6 +6,8 @@ import io.kflim.inbox.emaillist.EmailListItemRepository;
 import io.kflim.inbox.folders.Folder;
 import io.kflim.inbox.folders.FolderRepository;
 import io.kflim.inbox.folders.FolderService;
+import io.kflim.inbox.folders.UnreadEmailStats;
+import io.kflim.inbox.folders.UnreadEmailStatsRepository;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 public class InboxController {
@@ -32,6 +35,7 @@ public class InboxController {
     @Autowired
     private EmailListItemRepository emailListItemRepository;
 
+
     @GetMapping(value = "/")
     public String homePage(@RequestParam(required = false) String folder,
                            @AuthenticationPrincipal OAuth2User principal,
@@ -40,18 +44,21 @@ public class InboxController {
             return "index";
         }
 
+        // Folders
         String userId = principal.getAttribute("login");
 
         List<Folder> userFolders = folderRepository.findAllById(userId);
         model.addAttribute("userFolders", userFolders);
         List<Folder> defaultFolders = folderService.fetchDefaultFolders(userId);
         model.addAttribute("defaultFolders", defaultFolders);
+        model.addAttribute("stats", folderService.mapCountToLabel(userId));
+        model.addAttribute("userName", principal.getAttribute("name"));
 
         if (!StringUtils.hasText(folder)) {
-            folder = "inbox";
+            folder = "Inbox";
         }
-        model.addAttribute("folderName", folder);
 
+        // Emails
         List<EmailListItem> emailList = emailListItemRepository.findAllById_UserIdAndId_Label(userId, folder);
         PrettyTime p = new PrettyTime();
         emailList.stream().forEach(emailItem -> {
@@ -60,7 +67,7 @@ public class InboxController {
             emailItem.setTimeSince(p.format(date));
         });
         model.addAttribute("emailList", emailList);
-
+        model.addAttribute("folderName", folder);
 
         return "inbox-page";
     }

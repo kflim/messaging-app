@@ -15,6 +15,7 @@
   <style>
         .container {
           display: grid;
+          margin-top: 20px;
 
           grid-template-areas:
             "header header header"
@@ -57,6 +58,11 @@
 <div class="container">
   <header>
     <!-- Header content -->
+    <h3>
+      Inbox App
+      <small class="text-muted">Welcome, </small>
+      <small class="text-muted" th:text="${userName}">Username</small>
+    </h3>
   </header>
 
   <nav>
@@ -70,19 +76,22 @@
     <div class="card">
       <div class="card-header">Compose Email</div>
       <div class="card-body">
-        <form>
+        <form th:attr="action=@{/sendEmail}" method="post">
+          <input type="hidden"
+                 th:name="${_csrf.parameterName}"
+                 th:value="${_csrf.token}">
           <div class="mb-3">
             <label for="toList" class="form-label">To</label>
-            <input type="text" class="form-control" id="toList" th:value="toList">
+            <input type="text" class="form-control" name="toList" id="toList" th:value="${toList}" placeholder="User ID">
             <div id="toListHelp" class="form-text">Enter comma separated GitHub IDs of your recipients</div>
           </div>
           <div class="mb-3">
             <label for="subject" class="form-label">Subject</label>
-            <input type="text" class="form-control" id="subject">
+            <input type="text" class="form-control" name="subject" id="subject" th:value="${subject}">
           </div>
           <div class="mb-3">
             <label for="body" class="form-label">Body</label>
-            <textarea rows="10" class="form-control" id="body"></textarea>
+            <textarea rows="10" class="form-control" name="body" id="body" th:text="${body}"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

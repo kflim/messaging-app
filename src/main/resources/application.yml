@@ -3,17 +3,17 @@ server:
 
 spring:
   application:
-    name: <app-name>
+    name: messaging-app
   security:
     oauth2:
       client:
         registration:
           github:
-            client-id: <clientId>
-            client-secret: <clientSecret>
+            client-id: <client-id>
+            client-secret: <client-secret>
   data:
     cassandra:
-      keyspace-name: <keyspace>
+      keyspace-name: <keyspace-name>
       username: <username>
       password: <password>
       schema-action: recreate-drop-unused
@@ -26,8 +26,8 @@ spring:
 astra-db:
   id: <id>
   region: <region>
-  keyspace: <keyspace>
+  keyspace: <keyspace-name>
   application.token: <token>
 
 datastax.astra:
-  secure-connect-bundle: <bundle>
+  secure-connect-bundle: secure-connect-inbox-app.zip
